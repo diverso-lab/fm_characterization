@@ -1,8 +1,11 @@
 FROM python:3.9-alpine
 RUN apk update && apk add build-base linux-headers
 
-ADD . /app
 WORKDIR /app
+ADD . /app
+COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-CMD [ "/bin/sh", "docker_init.sh" ]
+EXPOSE 5000
+
+CMD [ "python3", "-m", "flask", "run", "--host=0.0.0.0"]
